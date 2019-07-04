@@ -1,0 +1,26 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: python-test
+  annotations:
+    description: The Python test Route template
+    tags: python-test
+objects:
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for Gerrit's http service.
+    name: python-test
+    labels:
+      app: python-test
+  spec:
+    host: python-test.openshift.local
+    port:
+      targetPort: 9090
+    to:
+      kind: Service
+      name: python-test
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Allow

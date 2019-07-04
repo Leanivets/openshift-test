@@ -1,0 +1,36 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: python-test
+  annotations:
+    description: The Python test DeploymentConfig template
+    tags: python-test
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: python-test
+    name: python-test
+  spec:
+    replicas: 1
+    selector:
+      app: python-test
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: python-test
+      spec:
+        containers:
+        - name: python-test
+          image: leanivets/python-test:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+              protocol: TCP
